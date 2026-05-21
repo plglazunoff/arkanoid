@@ -29,14 +29,14 @@ public class Platform : MonoBehaviour
 
     private void Update()
     {
-        if (_canNotMove)
-        {
-            return;
-        }
+        //if (_canNotMove)
+        //{
+        //    return;
+        //}
 
-        float mousePosition = Input.mousePosition.x;
-        Vector3 mousePositionOnScreen = _camera.ScreenToWorldPoint(new Vector3(mousePosition,0,0));
-        _transform.position = new Vector3(mousePositionOnScreen.x, _transform.position.y, _transform.position.z);
+        //float mousePosition = Input.mousePosition.x;
+        //Vector3 mousePositionOnScreen = _camera.ScreenToWorldPoint(new Vector3(mousePosition,0,0));
+        //_transform.position = new Vector3(mousePositionOnScreen.x, _transform.position.y, _transform.position.z);
         //if (_transform.position.x > BorderPositionX)
         //{
         //    _transform.position = new Vector2(BorderPositionX, _transform.position.y);
@@ -46,7 +46,7 @@ public class Platform : MonoBehaviour
         //{
         //    _transform.position = new Vector2(-BorderPositionX, _transform.position.y);
         //}
-        float clampX = Mathf.Clamp(_transform.position.x, -BorderPositionX, BorderPositionX);
-        _transform.position = new Vector2(clampX, _transform.position.y);
+        //float clampX = Mathf.Clamp(_transform.position.x, -BorderPositionX, BorderPositionX);
+        //_transform.position = new Vector2(clampX, _transform.position.y);
     }
 }

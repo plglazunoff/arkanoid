@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody;
     [SerializeField] private float _jumpForce;
-    private Vector3 _reflectedDirection;
     [SerializeField] private Platform _platform;
+
+    private Rigidbody2D _rigidbody;
+    private Vector3 _reflectedDirection;
     private bool _isBallOnPlatform = true;
     private Vector3 _startBallPosition;
     private Vector3 _startPlatformPosition;
     private Quaternion _startRotation;
     private LevelManager _gameManager;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -20,16 +22,19 @@ public class Ball : MonoBehaviour
         _gameManager = FindObjectOfType<LevelManager>();
         _gameManager.OnBallLivesEnded += StopBall;
     }
+
     private void StopBall()
     {
         _gameManager.OnBallLivesEnded -= StopBall;
         _jumpForce = 0;
     }
+
     private void Start()
     {
         _startBallPosition = transform.position;
         _startPlatformPosition = _platform.transform.position;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var point = collision.contacts[0].normal;
@@ -40,10 +45,12 @@ public class Ball : MonoBehaviour
             block.SetDamage();
         }
     }
+
     private void FixedUpdate()
     {
         _reflectedDirection = _rigidbody.velocity * _jumpForce;
     }
+
     private void Update()
     {
         if (_isBallOnPlatform)
@@ -57,18 +64,23 @@ public class Ball : MonoBehaviour
         }
         transform.rotation = _startRotation;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         int livesCountToRemove = 1;
         _gameManager.RemoveLives(livesCountToRemove);
-        Respawn();
+
+        if (collision.CompareTag("RespawnBorder"))
+        {
+            Respawn();
+        }
     }
+
     private void Respawn()
     {
         transform.position = _startBallPosition;
         _platform.transform.position = _startPlatformPosition;
         _rigidbody.velocity = Vector3.zero;
         _isBallOnPlatform = true;
-
     }
 }
