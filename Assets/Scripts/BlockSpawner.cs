@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlockSpawner : MonoBehaviour
@@ -11,9 +12,15 @@ public class BlockSpawner : MonoBehaviour
     [SerializeField] private int _rows;
     [SerializeField] private int _columns;
 
+    [Header("----------Cirlce Spawner----------")]
+    [SerializeField] private Vector3 _startSpawnCirclePosition;
+    [SerializeField] private int _numberOfCircleBlocks;
+    [SerializeField] private float _radius;
+
+
     private void Start()
     {
-        SpawnGridBlocks();
+        SpawnCircleBlocks();
     }
 
     public void SpawnGridBlocks()
@@ -28,5 +35,17 @@ public class BlockSpawner : MonoBehaviour
         }
     }
 
+    private void SpawnCircleBlocks()
+    {
+        float angle = 360 / _numberOfCircleBlocks;
+        for (int i = 0; i < _numberOfCircleBlocks; i++)
+        {
+            float angleRad = i * angle * Mathf.Deg2Rad;
+            float x = _radius * Mathf.Cos(angleRad);
+            float y = _radius * Mathf.Sin(angleRad);
+            Vector3 spawnPosition = _startSpawnCirclePosition + new Vector3(x, y);
+            Instantiate(_blockPrefab, spawnPosition, Quaternion.identity);
+        }
+    }
 
 }

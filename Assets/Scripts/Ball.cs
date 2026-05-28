@@ -38,7 +38,7 @@ public class Ball : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var point = collision.contacts[0].normal;
-        _rigidbody.velocity = Vector3.Reflect(_reflectedDirection, point).normalized * _jumpForce;
+        _rigidbody.linearVelocity = Vector3.Reflect(_reflectedDirection, point).normalized * _jumpForce;
         if (collision.gameObject.TryGetComponent<Block>(out var block))
         {
             block.GetComponent<SpriteRenderer>().color = new Color(Random.value, Random.value, Random.value);
@@ -48,7 +48,7 @@ public class Ball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _reflectedDirection = _rigidbody.velocity * _jumpForce;
+        _reflectedDirection = _rigidbody.linearVelocity * _jumpForce;
     }
 
     private void Update()
@@ -59,7 +59,7 @@ public class Ball : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Mouse0) && _isBallOnPlatform)
         {
-            _rigidbody.velocity = (Vector3.up + Vector3.right * Random.Range(-1f, 1f)).normalized * _jumpForce;
+            _rigidbody.linearVelocity = (Vector3.up + Vector3.right * Random.Range(-1f, 1f)).normalized * _jumpForce;
             _isBallOnPlatform = false;
         }
         transform.rotation = _startRotation;
@@ -80,7 +80,7 @@ public class Ball : MonoBehaviour
     {
         transform.position = _startBallPosition;
         _platform.transform.position = _startPlatformPosition;
-        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.linearVelocity = Vector3.zero;
         _isBallOnPlatform = true;
     }
 }

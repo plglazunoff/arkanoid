@@ -16,10 +16,10 @@ public class Platform : MonoBehaviour
     {
         _transform = GetComponent<Transform>();
         _camera = Camera.main;
-        Cursor.visible = false;
         _gameManager = FindObjectOfType<LevelManager>();
         _gameManager.OnBallLivesEnded += StopPlatform;
-    }
+    }    
+
     private void StopPlatform()
     {
         _gameManager.OnBallLivesEnded -= StopPlatform;
